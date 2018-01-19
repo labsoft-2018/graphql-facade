@@ -1,0 +1,11 @@
+{
+  "env": "dev",
+  "datomic-endpoint": "datomic:mem://graphql-facade",
+  "port": 8670,
+  "s3-auth": {
+    "bucket-name": "labsoft-secrets",
+    "region": "us-east-1"
+  },
+  "pub-key-path": "test/pubkey.pem",
+  "priv-key-path": "test/privkey.pem"
+}
