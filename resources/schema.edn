@@ -45,18 +45,25 @@
   :CreateCarrierPayload  {:fields {:carrier {:type :Carrier}}}
   :CreateCustomerPayload {:fields {:customer {:type :Customer}}}}
 
- :mutations
- {:signUpUser {:type :SignUpUserPayload
-               :args {:input {:type :SignUpUserInput}}}}
-
  :queries
- {:signUpUser     {:type :SignUpUserPayload
-                   :args {:input {:type :SignUpUserInput}}}
-  :signInUser     {:type :SignInUserPayload
-                   :args {:input {:type :SignInUserInput}}}
-  :createMerchant {:type :CreateMerchantPayload
-                   :args {:input {:type :CreateMerchantInput}}}
-  :createCarrier  {:type :CreateCarrierPayload
-                   :args {:input {:type :CreateCarrierInput}}}
-  :createCustomer {:type :CreateCustomerPayload
-                   :args {:input {:type :CreateCustomerInput}}}}}
+ {:allMerchants {:type    (list :Merchant)
+                 :resolve :queries/all-merchants}
+  :order        {:type    :Order
+                 :resolve :queries/order}}
+
+ :mutations
+ {:signUpUser     {:type    :SignUpUserPayload
+                   :args    {:input {:type :SignUpUserInput}}
+                   :resolve :mutations/sign-up-user}
+  :signInUser     {:type    :SignInUserPayload
+                   :args    {:input {:type :SignInUserInput}}
+                   :resolve :mutations/sign-in-user}
+  :createMerchant {:type    :CreateMerchantPayload
+                   :args    {:input {:type :CreateMerchantInput}}
+                   :resolve :mutations/create-merchant}
+  :createCarrier  {:type    :CreateCarrierPayload
+                   :args    {:input {:type :CreateCarrierInput}}
+                   :resolve :mutations/create-carrier}
+  :createCustomer {:type    :CreateCustomerPayload
+                   :args    {:input {:type :CreateCustomerInput}}
+                   :resolve :mutations/create-customer}}}
