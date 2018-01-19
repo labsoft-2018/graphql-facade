@@ -23,26 +23,36 @@
   :User                  {:fields {:id       {:type ID}
                                    :email    {:type ID}
                                    :role     {:type ID}
-                                   :merchant {:type :Merchant}
-                                   :customer {:type :Customer}
-                                   :carrier  {:type :Carrier}}}
+                                   :merchant {:type    :Merchant
+                                              :resolve :user/merchant}
+                                   :customer {:type    :Customer
+                                              :resolve :user/customer}
+                                   :carrier  {:type    :Carrier
+                                              :resolve :user/carrier}}}
   :Location              {:fields {:lat {:type ID}
                                    :lng {:type ID}}}
   :Customer              {:fields {:id   {:type ID}
                                    :name {:type String}
-                                   :user {:type :User}}}
+                                   :user {:type    :User
+                                          :resolve :customer/user}}}
   :Carrier               {:fields {:id   {:type ID}
                                    :name {:type String}
-                                   :user {:type :User}}}
+                                   :user {:type    :User
+                                          :resolve :carrier/user}}}
   :Merchant              {:fields {:id     {:type ID}
                                    :name   {:type String}
-                                   :user   {:type :User}
-                                   :orders {:type (list :Merchant)}}}
+                                   :user   {:type   :User
+                                            :resole :merchant/user}
+                                   :orders {:type    (list :Merchant)
+                                            :resolve :merchant/orders}}}
   :Order                 {:fields {:id       {:type ID}
                                    :state    {:type :OrderState}
-                                   :carrier  {:type :Carrier}
-                                   :customer {:type :Customer}}}
-  :Viewer                {:fields {:user {:type :User}}}
+                                   :carrier  {:type    :Carrier
+                                              :resolve :order/carrier}
+                                   :customer {:type    :Customer
+                                              :resolve :order/customer}}}
+  :Viewer                {:fields {:user {:type    :User
+                                          :resolve :viewer/user}}}
   :SignUpUserPayload     {:fields {:user {:type :User}}}
   :SignInUserPayload     {:fields {:user {:type :User}}}
   :CreateMerchantPayload {:fields {:merchant {:type :Merchant}}}
