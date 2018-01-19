@@ -1,6 +1,5 @@
-# graphql-facade
-
-TODO: Description
+# GraphQL Facade
+Our backend for our frontends
 
 ## TODO: Template Notes
 
