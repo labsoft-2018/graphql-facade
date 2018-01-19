@@ -1,0 +1,62 @@
+{:enums
+ {:OrderState {:description "OrderState"
+               :values      ["WAITING_MERCHANT_CONFIRMATION" "SEARCHING_CARRIER" "IN_TRANSIT" "DELIVERED"]}
+  :Role       {:description "Role"
+               :values      ["MERCHANT" "CARRIER" "CUSTOMER"]}}
+
+ :input-objects
+ {:SignUpUserInput     {:fields {:email    {:type String}
+                                 :password {:type String}
+                                 :name     {:type String}
+                                 :role     {:type :Role}}}
+  :SignInUserInput     {:fields {:email    {:type String}
+                                 :password {:type String}}}
+  :CreateMerchantInput {:fields {:name {:type String}}}
+  :CreateCarrierInput  {:fields {:name {:type String}}}
+  :CreateCustomerInput {:fields {:name {:type String}}}}
+
+ :objects
+ {:User                  {:fields {:id       {:type ID}
+                                   :email    {:type ID}
+                                   :role     {:type ID}
+                                   :merchant {:type :Merchant}
+                                   :customer {:type :Customer}
+                                   :carrier  {:type :Carrier}}}
+  :Location              {:fields {:lat {:type ID}
+                                   :lng {:type ID}}}
+  :Customer              {:fields {:id   {:type ID}
+                                   :name {:type String}
+                                   :user {:type :User}}}
+  :Carrier               {:fields {:id   {:type ID}
+                                   :name {:type String}
+                                   :user {:type :User}}}
+  :Merchant              {:fields {:id     {:type ID}
+                                   :name   {:type String}
+                                   :user   {:type :User}
+                                   :orders {:type (list :Merchant)}}}
+  :Order                 {:fields {:id       {:type ID}
+                                   :state    {:type :OrderState}
+                                   :carrier  {:type :Carrier}
+                                   :customer {:type :Customer}}}
+  :Viewer                {:fields {:user {:type :User}}}
+  :SignUpUserPayload     {:fields {:user {:type :User}}}
+  :SignInUserPayload     {:fields {:user {:type :User}}}
+  :CreateMerchantPayload {:fields {:merchant {:type :Merchant}}}
+  :CreateCarrierPayload  {:fields {:carrier {:type :Carrier}}}
+  :CreateCustomerPayload {:fields {:customer {:type :Customer}}}}
+
+ :mutations
+ {:signUpUser {:type :SignUpUserPayload
+               :args {:input {:type :SignUpUserInput}}}}
+
+ :queries
+ {:signUpUser     {:type :SignUpUserPayload
+                   :args {:input {:type :SignUpUserInput}}}
+  :signInUser     {:type :SignInUserPayload
+                   :args {:input {:type :SignInUserInput}}}
+  :createMerchant {:type :CreateMerchantPayload
+                   :args {:input {:type :CreateMerchantInput}}}
+  :createCarrier  {:type :CreateCarrierPayload
+                   :args {:input {:type :CreateCarrierInput}}}
+  :createCustomer {:type :CreateCustomerPayload
+                   :args {:input {:type :CreateCustomerInput}}}}}
