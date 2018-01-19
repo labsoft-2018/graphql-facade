@@ -16,7 +16,11 @@
   :CreateCustomerInput {:fields {:name {:type String}}}}
 
  :objects
- {:User                  {:fields {:id       {:type ID}
+ {:Viewer                {:fields {:allMerchants {:type    (list :Merchant)
+                                                  :resolve :viewer/all-merchants}
+                                   :order        {:type    :Order
+                                                  :resolve :viewer/order}}}
+  :User                  {:fields {:id       {:type ID}
                                    :email    {:type ID}
                                    :role     {:type ID}
                                    :merchant {:type :Merchant}
@@ -46,10 +50,8 @@
   :CreateCustomerPayload {:fields {:customer {:type :Customer}}}}
 
  :queries
- {:allMerchants {:type    (list :Merchant)
-                 :resolve :queries/all-merchants}
-  :order        {:type    :Order
-                 :resolve :queries/order}}
+ {:viewer {:type    :Viewer
+           :resolve :queries/viewer}}
 
  :mutations
  {:signUpUser     {:type    :SignUpUserPayload
