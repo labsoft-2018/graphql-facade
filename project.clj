@@ -7,7 +7,9 @@
                                     :password :env/clojars_password}]]
   :plugins [[lein-midje "3.2.1"]]
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [labsoft-2018/common-labsoft "0.5.0-SNAPSHOT"]]
+                 [labsoft-2018/common-labsoft "0.5.0-SNAPSHOT"]
+                 [com.walmartlabs/lacinia "0.21.0"]
+                 [com.walmartlabs/lacinia-pedestal "0.3.0"]]
   :resource-paths ["resources"]
   :min-lein-version "2.0.0"
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "graphql-facade.service/start"]}
