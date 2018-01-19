@@ -16,7 +16,9 @@
   :CreateCustomerInput {:fields {:name {:type String}}}}
 
  :objects
- {:Viewer                {:fields {:allMerchants {:type    (list :Merchant)
+ {:Viewer                {:fields {:user         {:type    :User
+                                                  :resolve :viewer/user}
+                                   :allMerchants {:type    (list :Merchant)
                                                   :resolve :viewer/all-merchants}
                                    :order        {:type    :Order
                                                   :resolve :viewer/order}}}
@@ -51,8 +53,6 @@
                                               :resolve :order/carrier}
                                    :customer {:type    :Customer
                                               :resolve :order/customer}}}
-  :Viewer                {:fields {:user {:type    :User
-                                          :resolve :viewer/user}}}
   :SignUpUserPayload     {:fields {:user {:type :User}}}
   :SignInUserPayload     {:fields {:user {:type :User}}}
   :CreateMerchantPayload {:fields {:merchant {:type :Merchant}}}
