@@ -14,7 +14,10 @@
             [graphql-facade.graphql.resolvers.mutations.merchant :as m-mer]
             [graphql-facade.graphql.resolvers.mutations.order :as m-ord]
             [graphql-facade.graphql.resolvers.mutations.carrier :as m-ca]
-            [graphql-facade.graphql.resolvers.mutations.customer :as m-cus]))
+            [graphql-facade.graphql.resolvers.mutations.customer :as m-cus]
+            [com.walmartlabs.lacinia :as lacinia]
+            [clojure.walk :as walk])
+  (:import (clojure.lang IPersistentMap)))
 
 
 (defn resolver-map
@@ -45,3 +48,7 @@
       edn/read-string
       (util/attach-resolvers (resolver-map))
       schema/compile))
+
+
+
+(def facade-schema (load-schema))

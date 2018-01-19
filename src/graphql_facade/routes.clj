@@ -4,12 +4,26 @@
             [common-labsoft.pedestal.interceptors.schema :as int-schema]
             [io.pedestal.http.route.definition :refer [defroutes]]
             [io.pedestal.http :as http]
-            [io.pedestal.http.body-params :as body-params]))
+            [io.pedestal.http.body-params :as body-params]
+            [graphql-facade.graphql.schema :as schema]
+            [graphql-facade.adapters.context :as a-ctx]
+            [graphql-facade.graphql.graphiql :as graphiql]
+            [com.walmartlabs.lacinia :as lacinia]))
 
-(defn hello-world
+(defn graphiql-handler
   [request]
   {:status 200
-   :body   {:res "Hello, World!"}})
+   :headers {"Content-Type" "text/html"}
+   :body (graphiql/render-html)})
+
+(defn make-graphql-handler
+  [schema context-adapter]
+  (fn [request]
+    (let [query (get-in request [:json-params :query])
+          variables (get-in request [:json-params :query])
+          context (context-adapter request)]
+      {:status 200
+       :body   (lacinia/execute schema query variables context)})))
 
 (defroutes routes
            [[["/" ^:interceptors [int-err/catch!
@@ -17,4 +31,5 @@
                                   http/json-body
                                   int-auth/auth
                                   int-schema/coerce-output]
-              {:get [:hello-world hello-world]}]]])
+              ["/graphql" {:get [:graphiql graphiql-handler]}]
+              ["/graphql" {:post [:graphql-query (make-graphql-handler schema/facade-schema a-ctx/req->context)]}]]]])
