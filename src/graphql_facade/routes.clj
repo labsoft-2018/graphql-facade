@@ -32,4 +32,4 @@
                                   int-auth/auth
                                   int-schema/coerce-output]
               ["/graphql" {:get [:graphiql graphiql-handler]}]
-              ["/graphql" {:post [:graphql-query (make-graphql-handler schema/facade-schema a-ctx/req->context)]}]]]])
+              ["/graphql" {:post [:graphql-query (make-graphql-handler (schema/load-schema) a-ctx/req->context)]}]]]])
