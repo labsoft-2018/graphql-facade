@@ -20,7 +20,7 @@
   [schema context-adapter]
   (fn [request]
     (let [query (get-in request [:json-params :query])
-          variables (get-in request [:json-params :query])
+          variables (get-in request [:json-params :variables])
           context (context-adapter request)]
       {:status 200
        :body   (lacinia/execute schema query variables context)})))
