@@ -1,15 +1,19 @@
 {:enums
  {:OrderState {:description "OrderState"
                :values      ["WAITING_MERCHANT_CONFIRMATION" "SEARCHING_CARRIER" "IN_TRANSIT" "DELIVERED"]}
-  :Role       {:description "Role"
-               :values      ["MERCHANT" "CARRIER" "CUSTOMER"]}}
+  :UserType   {:description "User Types"
+               :values      ["merchant" "carrier" "customer"]}
+  :CredType   {:description "Credential Types"
+               :values      ["password" "facebook"]}}
 
  :input-objects
  {:SignUpUserInput     {:fields {:email    {:type String}
                                  :password {:type String}
                                  :name     {:type String}
-                                 :role     {:type :Role}}}
-  :SignInUserInput     {:fields {:email    {:type String}
+                                 :type     {:type :UserType}}}
+  :SignInUserInput     {:fields {:userType {:type :UserType}
+                                 :credType {:type :CredType}
+                                 :email    {:type String}
                                  :password {:type String}}}
   :CreateMerchantInput {:fields {:name {:type String}}}
   :CreateCarrierInput  {:fields {:name {:type String}}}
@@ -23,8 +27,8 @@
                                    :order        {:type    :Order
                                                   :resolve :viewer/order}}}
   :User                  {:fields {:id       {:type ID}
-                                   :email    {:type ID}
-                                   :role     {:type ID}
+                                   :email    {:type String}
+                                   :type     {:type :UserType}
                                    :merchant {:type    :Merchant
                                               :resolve :user/merchant}
                                    :customer {:type    :Customer
@@ -53,8 +57,10 @@
                                               :resolve :order/carrier}
                                    :customer {:type    :Customer
                                               :resolve :order/customer}}}
-  :SignUpUserPayload     {:fields {:user {:type :User}}}
-  :SignInUserPayload     {:fields {:user {:type :User}}}
+  :SignUpUserPayload     {:fields {:user  {:type :User}
+                                   :token {:type String}}}
+  :SignInUserPayload     {:fields {:user  {:type :User}
+                                   :token {:type String}}}
   :CreateMerchantPayload {:fields {:merchant {:type :Merchant}}}
   :CreateCarrierPayload  {:fields {:carrier {:type :Carrier}}}
   :CreateCustomerPayload {:fields {:customer {:type :Customer}}}}
