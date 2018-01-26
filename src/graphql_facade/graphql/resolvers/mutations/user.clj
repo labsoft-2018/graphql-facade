@@ -1,26 +1,40 @@
 (ns graphql-facade.graphql.resolvers.mutations.user
   (:require [common-labsoft.protocols.http-client :as protocols.http-client]
             [graphql-facade.utils :as utils]
+            [graphql-facade.diplomat.http :as diplomat.http]
             [io.pedestal.log :as log]))
 
-(defn token-request!
-  [http user-type cred-type email password]
-  (protocols.http-client/authd-req! http {:method :post
-                                          :url    :auth/token
-                                          :body   {:auth/user-type (utils/namespaced "user.type" user-type)
-                                                   :auth/cred-type (utils/namespaced "credential.type" cred-type)
-                                                   :auth/email     email
-                                                   :auth/password  password}}))
-(defn token-response->mutation-payload
+
+
+(defn user-response->mutation-payload
   [response]
   {:user  (update-in response [:type] utils/unnamespaced)
    :token (-> response :token :jwt)})
 
-(defn sign-in-user
-  [{:keys [http]} {{:keys [userType credType email password]} :input} value]
-  (-> (token-request! http userType credType email password)
+(defn merchant-sign-in-with-email
+  [{:keys [http]} {:keys [email password]} value]
+  (-> (diplomat.http/get-token-with-email http :user.type/merchant email password)
       utils/unnamespaced-map
-      token-response->mutation-payload))
+      user-response->mutation-payload))
+
+(defn carrier-sign-in-with-email
+  [{:keys [http]} {:keys [email password]} value]
+  (-> (diplomat.http/get-token-with-email http :user.type/carrier email password)
+      utils/unnamespaced-map
+      user-response->mutation-payload))
+
+(defn customer-sign-in-with-email
+  [{:keys [http]} {:keys [email password]} value]
+  (-> (diplomat.http/get-token-with-email http :user.type/customer email password)
+      utils/unnamespaced-map
+      user-response->mutation-payload))
+
+(defn customer-sign-in-with-facebook
+  [{:keys [http]} {:keys [facebookToken]} value]
+  (println facebookToken)
+  (-> (diplomat.http/get-token-with-facebook http facebookToken)
+      utils/unnamespaced-map
+      user-response->mutation-payload))
 
 (defn sign-up-user
   [ctx args value]

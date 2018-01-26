@@ -35,11 +35,14 @@
    :merchant/orders           r-mer/orders
    :order/carrier             r-ord/carrier
    :order/customer            r-ord/customer
-   :mutations/sign-in-user    m-u/sign-in-user
    :mutations/sign-up-user    m-u/sign-up-user
+   :mutations/customer-sign-in-with-facebook m-u/customer-sign-in-with-facebook
+   :mutations/customer-sign-in-with-email m-u/customer-sign-in-with-email
+   :mutations/merchant-sign-in-with-email m-u/merchant-sign-in-with-email
+   :mutations/carrier-sign-in-with-email m-u/carrier-sign-in-with-email
    :mutations/create-carrier  m-ca/create-carrier
    :mutations/create-customer m-cus/create-customer
-   :mutations/create-merchant m-mer/create-merchant})
+   :mutations/create-merchant m-mer/create-merchant })
 
 (defn load-schema
   []

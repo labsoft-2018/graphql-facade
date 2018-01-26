@@ -70,18 +70,30 @@
            :resolve :queries/viewer}}
 
  :mutations
- {:signUpUser     {:type    :SignUpUserPayload
-                   :args    {:input {:type :SignUpUserInput}}
-                   :resolve :mutations/sign-up-user}
-  :signInUser     {:type    :SignInUserPayload
-                   :args    {:input {:type :SignInUserInput}}
-                   :resolve :mutations/sign-in-user}
-  :createMerchant {:type    :CreateMerchantPayload
-                   :args    {:input {:type :CreateMerchantInput}}
-                   :resolve :mutations/create-merchant}
-  :createCarrier  {:type    :CreateCarrierPayload
-                   :args    {:input {:type :CreateCarrierInput}}
-                   :resolve :mutations/create-carrier}
-  :createCustomer {:type    :CreateCustomerPayload
-                   :args    {:input {:type :CreateCustomerInput}}
-                   :resolve :mutations/create-customer}}}
+ {:signUpUser                 {:type    :SignUpUserPayload
+                               :args    {:input {:type :SignUpUserInput}}
+                               :resolve :mutations/sign-up-user}
+  :customerSignInWithFacebook {:type    :SignInUserPayload
+                               :args    {:facebookToken {:type String}}
+                               :resolve :mutations/customer-sign-in-with-facebook}
+  :customerSignInWithEmail    {:type    :SignInUserPayload
+                               :args    {:email    {:type String}
+                                         :password {:type String}}
+                               :resolve :mutations/customer-sign-in-with-email}
+  :merchantSignInWithEmail    {:type    :SignInUserPayload
+                               :args    {:email    {:type String}
+                                         :password {:type String}}
+                               :resolve :mutations/merchant-sign-in-with-email}
+  :carrierSignInWithEmail     {:type    :SignInUserPayload
+                               :args    {:email    {:type String}
+                                         :password {:type String}}
+                               :resolve :mutations/carrier-sign-in-with-email}
+  :createMerchant             {:type    :CreateMerchantPayload
+                               :args    {:input {:type :CreateMerchantInput}}
+                               :resolve :mutations/create-merchant}
+  :createCarrier              {:type    :CreateCarrierPayload
+                               :args    {:input {:type :CreateCarrierInput}}
+                               :resolve :mutations/create-carrier}
+  :createCustomer             {:type    :CreateCustomerPayload
+                               :args    {:input {:type :CreateCustomerInput}}
+                               :resolve :mutations/create-customer}}}
