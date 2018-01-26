@@ -11,24 +11,11 @@
   "pub-key-path": "test/pubkey.pem",
   "priv-key-path": "test/privkey.pem",
   "services": {
-    "customers": {
-      "host": "https://customers.labsoft.host",
-      "endpoints": {
-        "one-customer": "/customers/:id",
-        "all-customers": "/customers"
-      }
-    },
     "auth": {
       "host": "http://localhost:8080",
       "endpoints": {
         "token": "/api/users/token",
         "service-token": "/api/services/token"
-      }
-    },
-    "httpbin": {
-      "host": "http://httpbin.org",
-      "endpoints": {
-        "get": "/get"
       }
     }
   }
