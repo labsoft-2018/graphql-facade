@@ -6,6 +6,7 @@
             [common-labsoft.components.webapp :as components.webapp]
             [common-labsoft.components.crypto :as components.crypto]
             [common-labsoft.components.token :as components.token]
+            [common-labsoft.components.http-client :as components.http-client]
             [common-labsoft.components.datomic :as components.datomic]
             [common-labsoft.components.pedestal :as components.pedestal]
             [common-labsoft.components.s3-client :as components.s3-client]
@@ -19,6 +20,7 @@
     :pedestal (component/using (components.pedestal/new-pedestal routes) [:config :webapp])
     :datomic (component/using (components.datomic/new-datomic datomic.config/settings) [:config])
     :token (component/using (components.token/new-token) [:config :s3-auth])
+    :http (component/using (components.http-client/new-http-client) [:config :token])
     :crypto (component/using (components.crypto/new-crypto) [:config])
     :sqs (component/using (components.sqs/new-sqs sqs/settings) [:config])
-    :webapp (component/using (components.webapp/new-webapp) [:config :datomic :token :crypto :sqs])))
+    :webapp (component/using (components.webapp/new-webapp) [:config :datomic :token :crypto :sqs :http])))
