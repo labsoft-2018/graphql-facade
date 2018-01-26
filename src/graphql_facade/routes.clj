@@ -20,7 +20,7 @@
   [schema context-adapter]
   (fn [request]
     (let [query (get-in request [:json-params :query])
-          variables (get-in request [:json-params :query])
+          variables (get-in request [:json-params :variables])
           context (context-adapter request)]
       {:status 200
        :body   (lacinia/execute schema query variables context)})))
@@ -32,4 +32,8 @@
                                   int-auth/auth
                                   int-schema/coerce-output]
               ["/graphql" {:get [:graphiql graphiql-handler]}]
+<<<<<<< Updated upstream
               ["/graphql" {:post [:graphql-query (make-graphql-handler schema/facade-schema a-ctx/req->context)]}]]]])
+=======
+              ["/graphql" {:post [:graphql-query (make-graphql-handler (schema/load-schema) a-ctx/req->context)]}]]]])
+>>>>>>> Stashed changes
