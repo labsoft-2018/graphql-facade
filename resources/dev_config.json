@@ -1,5 +1,7 @@
 {
   "env": "dev",
+  "service-name": "facade",
+  "service-password": "!XkzBz;xd+Z&),3X",
   "datomic-endpoint": "datomic:mem://graphql-facade",
   "port": 8670,
   "s3-auth": {
@@ -7,5 +9,27 @@
     "region": "us-east-1"
   },
   "pub-key-path": "test/pubkey.pem",
-  "priv-key-path": "test/privkey.pem"
+  "priv-key-path": "test/privkey.pem",
+  "services": {
+    "customers": {
+      "host": "https://customers.labsoft.host",
+      "endpoints": {
+        "one-customer": "/customers/:id",
+        "all-customers": "/customers"
+      }
+    },
+    "auth": {
+      "host": "http://localhost:8080",
+      "endpoints": {
+        "token": "/api/users/token",
+        "service-token": "/api/services/token"
+      }
+    },
+    "httpbin": {
+      "host": "http://httpbin.org",
+      "endpoints": {
+        "get": "/get"
+      }
+    }
+  }
 }
